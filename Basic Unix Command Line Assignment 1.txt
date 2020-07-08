@@ -1,33 +1,25 @@
-﻿Objective:- Assignments will help trainees to understand the basics of unix command and how to explore and use it.
-
-DO NOT copy paste commands from internet, you can take help of the Unix in-built command manual.
-
-Be Honest to yourself!
-
-Important command and option to learn unix commands:-
-man Command
-Example:-
-man ls
-
---help Option
-Example:-
-ls --help
-
-NOTE:- Always use "man" command before using any unix commands and read about it and its options and how to use it.
-
-Assignments:-
+﻿Assignments:-
 
 List the contents of a directory and their attributes
 ls
 
 Long list the content with file, directory ownership, permissions,sizes, etc…
 ls -l
+total 0
+drwxrwxr-x. 2 ec2-user ec2-user 53 Jul  8 05:01 Neha
 
 Display the size of the file in human readable format
 ls -h
 
 Show all files and folders including hidden one
 ls -la
+total 20
+drwxrwxr-x. 2 ec2-user ec2-user    53 Jul  8 05:01 .
+drwx------. 4 ec2-user ec2-user   107 Jul  7 16:02 ..
+-rwxrw-r--. 1 ec2-user ec2-user    36 Jul  8 04:59 hw.sh
+-rw-r--r--. 1 ec2-user ec2-user 12288 Jul  8 05:03 .hw.sh.swp
+-rw-rw-r--. 1 ec2-user ec2-user    11 Jul  7 14:21 test.txt
+
 
 list directories recursively
 ls -R /tmp/dir1
@@ -55,6 +47,7 @@ echo
 
 Print the value of the env variable "PATH" on the console
 echo $PATH
+/home/ec2-user/.local/bin:/home/ec2-user/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
 
 Is linux a case-sensitive operating system?
 yes, Its a case -sensitive
@@ -122,15 +115,30 @@ How many lines of history does the system keep and from where you can change it?
 1000
 
 How can you modify bash's history behaviour
+we can modify the bash's history by opening the vi ./bash_profile file.
 
 Display all the commands entered so far, now, try to run a particular command from the history list without typing that command.
+history
+  127  whoami
+  128  clear
+  129  pwd
+  130  ls -ltr
+  131  cd Neha
+  132  ls -lh
+  133  echo $HISTSIZE
+  134  echo #HISTFILE
+  135  echo $HISTFILESIZE
+  136  ls -la
 
-NOTE:- TAB key is your friend when it comes to command completion and having long file and directory names autocompleted at the bash prompt for you. JUST BE LAZY AND USE TAB KEY FOR AUTO COMPLETION ;-)
+!127
 
 What are the different types of shell and where are they used and how do we use them?
 
 1. The Bourne Shell
-The Bourne shell (sh), written by Steve Bourne at AT&T Bell Labs, is the original UNIX shell. It is the preferred shell for shell programming because of its compactness and speed. A Bourne shell drawback is that it lacks features for interactive use, such as the ability to recall previous commands (history). The Bourne shell also lacks built-in arithmetic and logical expression handling.
+The Bourne shell (sh), written by Steve Bourne at AT&T Bell Labs, is the original UNIX shell. 
+It is the preferred shell for shell programming because of its compactness and speed. 
+A Bourne shell drawback is that it lacks features for interactive use, such as the ability to recall previous commands 
+(history). The Bourne shell also lacks built-in arithmetic and logical expression handling.
 
 The Bourne shell is the Solaris OS default shell. It is the standard shell for Solaris system administration scripts. For the Bourne shell the:
 
@@ -221,6 +229,7 @@ How we see all our env variables?
 printenv
 
 How we see all env variables in alphabical order?
+[ec2-user@ip-172-31-34-178 ~]$ printenv | sort
 
 What Format does the env var and its values are stored?
 key=value format
@@ -231,30 +240,78 @@ myvar=hello
 How do you start a new bash shell?
 
 Difference between Local/Shell variables to Global Variable
+local vaiables: Local Variable will work only within function or within condition statement only. 
+                If your calling local variable from outside of function or outside of statement it will not work
+
+global variable: Global variables are also called as environment variables, which will be available to all shells. 
+                 printenv command is used to display all the environment variables.
 
 Making a variable accessible from other the shell in the system.
+Through export keyword we can do that
 
 Show the real life use case of exporting a variable
+export A=10
+created one file vi hw.sh
+#!/usr/bin/bash
+echo Hello,World!
+echo $A
 
 Convert the above script file into a command, The file should run with "myappp" instead of "myapp.sh"
 
 What is Globbing? Explain in depth with examples?
+File globbing is a feature provided by the UNIX/Linux shell to represent multiple filenames by using special characters called wildcards 
+with a single file name. A wildcard is essentially a symbol which may be used to substitute for one or more characters. 
+Therefore, we can use wildcards for generating the appropriate combination of file names as per our requirement.
+
+The bash shell provides three characters to use as wildcards:
+
+Asterisk (*) to represent 0 or more characters
+Question mark (?) to represent exactly one character
+Square brackets ([]) to represent and match for the character enclosed within the square brackets.
+
+[root@linuxnix ~]# ls -l /dev/sda*
+brw-rw----. 1 root disk 8, 0 Nov 2 18:01 /dev/sda
+brw-rw----. 1 root disk 8, 1 Nov 2 18:02 /dev/sda1
+brw-rw----. 1 root disk 8, 2 Nov 2 18:01 /dev/sda2
 
 List all entries with extension ".sh"
 ls -ltr *.sh
 
 List all entries with numbers in it.
+ls | egrep '[0-9]+'
+1.txt
+23Neha.txt
+2.txt
 
 List all entries that starts with a character and ends with a number
 
 List all entries that name length more than 5 characters
 
 What is Quoting? and Why do we need it?
+Unix Shell provides various metacharacters which have special meaning while using them in any Shell Script 
+and causes termination of a word unless quoted.
+
+example:
+#!/bin/sh
+
+echo "I have \$1200"
+
+Upon execution, you will receive the following result −
+
+I have $1200
 
 Write few(minimum 3) unique examples that shows, how a particular problem is solved using Quoting.
 
 How do you find a particular files/directories based on a particular search criteria?
 HINT:- look for commands -> locate, find and whereis
+[ec2-user@ip-172-31-34-178 Neha]$ locate 1.txt
+-bash: locate: command not found
+[ec2-user@ip-172-31-34-178 Neha]$ find 1.txt
+1.txt
+[ec2-user@ip-172-31-34-178 Neha]$ whereis 1.txt
+1:
+[ec2-user@ip-172-31-34-178 Neha]$
+
 
 Write major difference between locate, find and whereis?
 
@@ -266,12 +323,16 @@ Explain absolute and Relative Paths
 
 What are the different ways of creating a File in linux System? Write an example of each and the difference between them.
 vi abc.txt
-nano abc.txt
-
+touch abc.txt
+echo "This is some text" > randomtext.txt
+nano test.txt
+gedit hello.txt
 
 In how many ways we can delete the files from linux system? write an example of each and teh difference between them.
 rm fileNAME
 
 Archiving files using linux command, write a command to archive set of files from linux commands.
+tar -cvf ostechnix.tar 1.txt 2.txt 23Neha.txt
 
 Extract the archived files from the above step.
+tar -xvf ostechnix.tar
